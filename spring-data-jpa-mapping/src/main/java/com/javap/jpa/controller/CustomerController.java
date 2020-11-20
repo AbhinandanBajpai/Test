@@ -20,7 +20,7 @@ import com.javap.jpa.repository.CustomerRepository;
 import com.javap.jpa.repository.ProductRepository;
 
 @RestController
-public class OrderController {
+public class CustomerController {
 	
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -28,7 +28,7 @@ public class OrderController {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	@PostMapping("/placeorder")
+	@PostMapping("/customers")
 	public Customer createOrder(@RequestBody Customer customer) {
 		
 		System.out.println(customer);
@@ -36,8 +36,8 @@ public class OrderController {
 		return customerRepository.save(customer);
 	}
 	
-	@GetMapping("/findAllOrders")
-	public List<Customer> findAllCust(){
+	@GetMapping("/customers")
+	public List<Customer> getAllCust(){
 		
 //		 List<Customer> findAll = customerRepository.findAll();
 		 List<Customer> findingAll = customerRepository.findingAll();
@@ -47,28 +47,28 @@ public class OrderController {
 	
 	//finding By Id
 	
-	@GetMapping("findAllOrders/{id}")
-	public Customer findingById(@PathVariable int id) {
+	@GetMapping("customers/{id}")
+	public Customer getCustomersById(@PathVariable int id) {
 		return customerRepository.findingById(id);
 	}
 	
 	//Updating the data
 	
-	@PutMapping("/update/{id}")
-	public Customer update(@PathVariable int id , @RequestBody Customer customer ) {
+	@PutMapping("/customers/{custId}")
+	public Customer updateCustomers(@PathVariable int custId , @RequestBody Customer customer ) {
 
-	 return	customerRepository.findById(id).map(cust -> {
+	 return	customerRepository.findById(custId).map(cust -> {
 			cust.setName(customer.getName());
 			cust.setEmail(customer.getEmail());
 			cust.setGender(customer.getGender());
 			cust.setProducts(customer.getProducts());
 			return customerRepository.save(cust);	
-		}).orElseThrow(()-> new ResourceNotFoundException("id"+id+"not found"));
+		}).orElseThrow(()-> new ResourceNotFoundException("id"+custId+"not found"));
 	}
 //	
 	//deleting the data
-	@DeleteMapping("/delete/{id}")
-	public Customer deletingById(@PathVariable int id) {
+	@DeleteMapping("/customers/{custId}")
+	public Customer deleteCustomerById(@PathVariable int id) {
 		
 		 return customerRepository.deleteByID(id);
 		

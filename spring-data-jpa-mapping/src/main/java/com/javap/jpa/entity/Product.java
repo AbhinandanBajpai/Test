@@ -13,6 +13,7 @@ public class Product {
 	private String productName;
 	private int qty;
 	private int price;
+	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
